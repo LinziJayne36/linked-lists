@@ -25,7 +25,7 @@ class LinkedList {
         this.length++;
     }
     prepend(value) {
-        //TODO: Adds new node containing value to start of list
+        //Adds new node containing value to start of list
         const node = new Node(value); //creates new node using our Node class (a node has this.value and this.nextNode)
         if (!head) {
             this.head = node;
@@ -68,8 +68,35 @@ class LinkedList {
         return currentNode; // Return the node at the specified index.
     }
     pop() {
-        //TODO: Removes last element from list
+        //Removes last element from list
+        if (!this.head) {
+            // If list is empty, return null
+            return null;
+        }
+
+        if (this.tail === this.head) {
+            //if list has only 1 item, reset properties to defaults
+            this.head = null;
+            this.tail = null;
+            this.length = 0;
+            return;
+        }
+
+        //if list contains > 1 items
+        let currentNode = this.head;
+        let lastButOneNode = null;
+        //while a nextNode still exists, loop through list
+        while (currentNode.nextNode) {
+            lastButOneNode = currentNode;
+            currentNode = currentNode.lastButOneNode;
+        }
+
+        lastButOneNode.nextNode = null; //Remove pointer to the last node we wish to delete
+        this.tailNode = lastButOneNode; //Set the previous last but one node to be tail node
+        this.length -= 1; //Adjust list length by -1
+        return currentNode.value; //Return value of removed node to caller
     }
+
     contains(value) {
         //TODO: Returns true if given value is in list, false if it's not
     }

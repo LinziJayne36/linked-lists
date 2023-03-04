@@ -99,7 +99,24 @@ class LinkedList {
 
     contains(value) {
         //TODO: Returns true if given value is in list, false if it's not
+
+        if (!this.head) {
+            //If list is empty, return false as value is not there!
+            return false;
+        }
+
+        let currentNode = this.head; //will start searching here
+        while (currentNode) {
+            //while the list is not empty, loop and check...
+            if (currentNode.value === value) {
+                return true;
+            }
+            currentNode = currentNode.nextNode;
+        }
+
+        return false; //because everything is now checked and value is not there
     }
+
     find(value) {
         //TODO: Returns index of node holding given value, returns null if value not present
     }

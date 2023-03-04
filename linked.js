@@ -19,25 +19,53 @@ class LinkedList {
             //if this.head does have a value, then there are already item(s) in the list
             //So, the `nextNode` property of the `tail` is set to the new (next) node...
             this.tail.nextNode = node;
-            this.tail = node; //The tail node must now ne the node we just added
+            this.tail = node; //The tail node must now be the node we just added
         }
 
         this.length++;
     }
     prepend(value) {
         //TODO: Adds new node containing value to start of list
+        const node = new Node(value); //creates new node using our Node class (a node has this.value and this.nextNode)
+        if (!head) {
+            this.head = node;
+            this.tail = node;
+        } else {
+            // If list is not empty, add new node before current head.
+            node.next = this.head; // Set `next` property of new node to current head.
+            this.head = node; //Set `head` property of list to new node.
+        }
+
+        this.length++;
     }
     size() {
-        //TODO: Returns total num of nodes in list
+        //Returns total num of nodes in list
+        return this.length;
     }
     head() {
-        //TODO: Returns 1st node in list
+        //Returns 1st node in list
+        return this.head;
     }
     tail() {
-        //TODO: Returns last node in list
+        //Returns last node in list
+        return this.tail;
     }
     at(index) {
-        //TODO: Returns node at given index
+        //Returns node at given index
+        if (index < 0 || index >= this.length) {
+            return null; // Return null if index out of range.
+        }
+
+        let currentNode = this.head;
+        let count = 0;
+
+        while (count !== index) {
+            // Iterate list until index is reached.
+            currentNode = currentNode.next;
+            count++;
+        }
+
+        return currentNode; // Return the node at the specified index.
     }
     pop() {
         //TODO: Removes last element from list

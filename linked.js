@@ -1,5 +1,5 @@
 /* This is the linked lists exercise from the comp-sci section of 
-The Odin Project Intermediate JS course. */
+The Odin Project Intermediate JS course. Run this project by navigating to its directory and running `node linked.js` */
 
 class LinkedList {
     constructor() {
@@ -27,12 +27,12 @@ class LinkedList {
     prepend(value) {
         //Adds new node containing value to start of list
         const node = new Node(value); //creates new node using our Node class (a node has this.value and this.nextNode)
-        if (!head) {
+        if (!this.head) {
             this.head = node;
             this.tail = node;
         } else {
             // If list is not empty, add new node before current head.
-            node.next = this.head; // Set `next` property of new node to current head.
+            node.nextNode = this.head; // Set `nextNode` property of new node to current head.
             this.head = node; //Set `head` property of list to new node.
         }
 
@@ -42,13 +42,13 @@ class LinkedList {
         //Returns total num of nodes in list
         return this.length;
     }
-    head() {
+    headNode() {
         //Returns 1st node in list
-        return this.head;
+        return this.head.value;
     }
-    tail() {
+    tailNode() {
         //Returns last node in list
-        return this.tail;
+        return this.tail.value;
     }
     at(index) {
         //Returns node at given index
@@ -61,7 +61,7 @@ class LinkedList {
 
         while (count !== index) {
             // Iterate list until index is reached.
-            currentNode = currentNode.next;
+            currentNode = currentNode.nextNode;
             count++;
         }
 
@@ -83,22 +83,22 @@ class LinkedList {
         }
 
         //if list contains > 1 items
-        let currentNode = this.head;
+        let currentNode = this.head; //start from 1st item
         let lastButOneNode = null;
         //while a nextNode still exists, loop through list
         while (currentNode.nextNode) {
             lastButOneNode = currentNode;
-            currentNode = currentNode.lastButOneNode;
+            currentNode = currentNode.nextNode;
         }
 
         lastButOneNode.nextNode = null; //Remove pointer to the last node we wish to delete
-        this.tailNode = lastButOneNode; //Set the previous last but one node to be tail node
-        this.length -= 1; //Adjust list length by -1
+        this.tail = lastButOneNode; //Set the previous last but one node to be tail node
+        this.length--; //Adjust list length by -1
         return currentNode.value; //Return value of removed node to caller
     }
 
     contains(value) {
-        //TODO: Returns true if given value is in list, false if it's not
+        //Returns true if given value is in list, false if it's not
 
         if (!this.head) {
             //If list is empty, return false as value is not there!
@@ -118,8 +118,24 @@ class LinkedList {
     }
 
     find(value) {
-        //TODO: Returns index of node holding given value, returns null if value not present
+        //Returns index of node holding given value, returns null if value not present
+        if (!this.head) {
+            //If list is empty, return null as value is not there!
+            return null;
+        }
+        let currentNode = this.head; //will start searching here
+        let index = 0; //initialize our index counter
+        while (currentNode) {
+            //while the list is not empty, loop and check...
+            if (currentNode.value === value) {
+                return index;
+            }
+            currentNode = currentNode.nextNode;
+            index++;
+        }
+        return null; // This line runs when all is searched and value not found
     }
+
     toString() {
         //TODO: Represents LinkedList objects as strings in format:
         //( value ) -> ( value ) -> ( value ) -> null
@@ -128,8 +144,22 @@ class LinkedList {
 }
 
 class Node {
-    constructor() {
-        this.value = null;
+    constructor(value) {
+        this.value = value || null;
         this.nextNode = null;
     }
 }
+
+const myList = new LinkedList();
+myList.append(41);
+myList.append(11, 12);
+myList.prepend(1001);
+myList.append(999);
+console.log(myList.headNode()); //see output of head method
+console.log(myList.tailNode()); //see output of tail method
+console.log(myList.size()); //see output of size method
+console.log(myList.contains(11, 12)); // see output (boolean) of contains method
+console.log(myList.at(2)); //see output (node) of at method
+console.log(myList.find(999)); //see output (index num) of find method
+myList.pop(); //remove last list item
+console.log(myList.tailNode()); // check if pop() removed last item

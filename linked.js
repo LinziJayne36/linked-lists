@@ -140,6 +140,15 @@ class LinkedList {
         //TODO: Represents LinkedList objects as strings in format:
         //( value ) -> ( value ) -> ( value ) -> null
         // This is useful for printing/previewing in console
+
+        let currentNode = this.head;
+        let str = "";
+        while (currentNode) {
+            str += `(${currentNode.value}) -> `;
+            currentNode = currentNode.nextNode;
+        }
+        str += "null";
+        return str;
     }
 }
 
@@ -163,3 +172,4 @@ console.log(myList.at(2)); //see output (node) of at method
 console.log(myList.find(999)); //see output (index num) of find method
 myList.pop(); //remove last list item
 console.log(myList.tailNode()); // check if pop() removed last item
+console.log(myList.toString()); //see output of toString method
